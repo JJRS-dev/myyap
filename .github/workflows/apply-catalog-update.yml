@@ -1,0 +1,29 @@
+name: Apply catalog update
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - site-payload.gz.b64
+
+permissions:
+  contents: write
+
+jobs:
+  apply:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Apply updated storefront
+        shell: bash
+        run: |
+          base64 -d site-payload.gz.b64 | gunzip > index.html
+          cp index.html purograne.html
+          rm -f site-payload.gz.b64
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add index.html purograne.html site-payload.gz.b64
+          git commit -m "Atualiza catálogo com imagens e cards profissionais"
+          git push
