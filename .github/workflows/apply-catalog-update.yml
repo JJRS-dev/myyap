@@ -5,6 +5,7 @@ on:
     branches: [main]
     paths:
       - site-payload.gz.b64
+      - .github/workflows/apply-catalog-update.yml
 
 permissions:
   contents: write
