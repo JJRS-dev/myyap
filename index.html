@@ -641,10 +641,6 @@ function productId(name) {
 
 PRODUCTS.forEach(product => { product.id = productId(product.name); });
 
-function productImage(product) {
-  return PRODUCT_IMAGES[product.swatch] || "";
-}
-
 function renderPromotions() {
   const promotionsGrid = document.getElementById("promotionsGrid");
   promotionsGrid.innerHTML = WEEKLY_PROMOTIONS.map(promotion => {
