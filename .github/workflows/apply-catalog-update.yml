@@ -4,7 +4,6 @@ on:
   push:
     branches: [main]
     paths:
-      - site-payload.gz.b64
       - .github/workflows/apply-catalog-update.yml
 
 permissions:
@@ -20,11 +19,12 @@ jobs:
       - name: Apply updated storefront
         shell: bash
         run: |
-          base64 -d site-payload.gz.b64 | gunzip > index.html
+          cat .update/chunk*.txt | base64 -d | gunzip > index.html
           cp index.html purograne.html
+          rm -rf .update
           rm -f site-payload.gz.b64
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add index.html purograne.html site-payload.gz.b64
+          git add -A
           git commit -m "Atualiza catálogo com imagens e cards profissionais"
           git push
