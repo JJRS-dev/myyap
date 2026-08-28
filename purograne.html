@@ -85,12 +85,18 @@
   .filter-row { display: flex; gap: 0.6rem; flex-wrap: wrap; margin-bottom: 2rem; }
   .filter-btn { font-family: var(--font-body); font-size: 0.88rem; font-weight: 500; padding: 0.55rem 1.1rem; border-radius: 999px; border: 1px solid var(--sage-soft); background: var(--white); cursor: pointer; transition: background 0.2s, color 0.2s; }
   .filter-btn.active, .filter-btn:hover { background: var(--moss); color: var(--oat); border-color: var(--moss); }
-  .products-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; }
-  .product-card { background: var(--white); border-radius: 14px; overflow: hidden; border: 1px solid var(--sage-soft); cursor: pointer; transition: transform 0.25s ease, box-shadow 0.25s ease; }
-  .product-card:hover { transform: translateY(-6px); box-shadow: 0 24px 36px -24px rgba(27,42,22,0.4); }
+  .products-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.2rem; align-items: stretch; }
+  .product-card { background: var(--white); border-radius: 22px; overflow: hidden; border: 1px solid rgba(169,190,150,0.55); cursor: pointer; transition: transform 0.28s ease, box-shadow 0.28s ease, border-color 0.28s ease; box-shadow: 0 16px 30px -28px rgba(27,42,22,0.75); display: flex; flex-direction: column; min-height: 100%; position: relative; }
+  .product-card:hover { transform: translateY(-8px); box-shadow: 0 30px 42px -28px rgba(27,42,22,0.42); border-color: rgba(62,92,52,0.35); }
+  .product-media { padding: 0.8rem 0.8rem 0; position: relative; }
+  .product-badges { position: absolute; top: 1.15rem; left: 1.15rem; right: 1.15rem; display: flex; align-items: flex-start; justify-content: space-between; gap: 0.6rem; z-index: 2; pointer-events: none; }
+  .product-pill { display: inline-flex; align-items: center; gap: 0.35rem; padding: 0.38rem 0.72rem; border-radius: 999px; font-size: 0.7rem; font-family: var(--font-mono); letter-spacing: 0.06em; text-transform: uppercase; background: rgba(255,255,255,0.92); color: var(--forest); box-shadow: 0 10px 18px -16px rgba(27,42,22,0.8); backdrop-filter: blur(4px); }
+  .product-pill.product-kind { background: rgba(62,92,52,0.92); color: var(--oat); }
+  .product-frame { aspect-ratio: 4/3; border-radius: 18px; overflow: hidden; position: relative; background: linear-gradient(180deg, rgba(255,255,255,0.16), rgba(27,42,22,0.06)); }
+  .product-frame::after { content: ""; position: absolute; inset: auto 0 0 0; height: 42%; background: linear-gradient(180deg, rgba(27,42,22,0) 0%, rgba(27,42,22,0.12) 100%); pointer-events: none; }
   .swatch { aspect-ratio: 4/3; }
-  .product-image { display: block; width: 100%; height: 100%; object-fit: cover; background: var(--oat-deep); transition: transform 0.35s ease; }
-  .product-card:hover .product-image { transform: scale(1.025); }
+  .product-image { display: block; width: 100%; height: 100%; object-fit: cover; background: var(--oat-deep); transition: transform 0.4s ease; }
+  .product-card:hover .product-image { transform: scale(1.05); }
   :focus-visible { outline: 3px solid var(--wheat); outline-offset: 3px; }
   @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; } }
   .swatch.rice { background: radial-gradient(circle at 30% 30%, #f2ecd8, #e4dcc0); background-size: 6px 6px; }
@@ -113,11 +119,19 @@
   .swatch.turmeric { background: radial-gradient(circle at 35% 40%, #f6c52f 3px, transparent 4px), #d88716; background-size: 13px 13px; }
   .swatch.dried-fruit { background: radial-gradient(circle at 35% 40%, #c95b3e 4px, transparent 5px), #e7a06d; background-size: 17px 17px; }
   .swatch.dried-banana { background: repeating-linear-gradient(25deg, #f5d67d, #f5d67d 8px, #d8ad4c 8px, #d8ad4c 12px); }
-  .product-info { padding: 0.9rem 1rem 1.1rem; }
-  .product-info h3 { font-family: var(--font-body); font-size: 1rem; font-weight: 600; margin-bottom: 0.3rem; }
-  .price { font-family: var(--font-mono); font-weight: 700; color: var(--moss-dark); }
+  .product-info { padding: 1rem 1rem 1.1rem; display: flex; flex-direction: column; flex: 1; }
+  .product-info h3 { font-family: var(--font-body); font-size: 1.02rem; font-weight: 700; margin-bottom: 0.35rem; line-height: 1.28; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; min-height: 2.6em; }
+  .product-subtitle { font-size: 0.78rem; color: var(--forest-soft); font-family: var(--font-mono); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 0.55rem; }
+  .product-benefit { font-size: 0.9rem; color: var(--forest-soft); margin-bottom: 0.9rem; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; min-height: 2.8em; }
+  .product-footer { display: flex; align-items: end; justify-content: space-between; gap: 0.8rem; margin-top: auto; }
+  .price-wrap { display: flex; flex-direction: column; gap: 0.18rem; }
+  .price-label { font-size: 0.72rem; color: var(--forest-soft); text-transform: uppercase; letter-spacing: 0.08em; font-family: var(--font-mono); }
+  .price { font-family: var(--font-mono); font-weight: 700; color: var(--moss-dark); font-size: 1.08rem; }
   .price span { font-weight: 400; color: var(--forest-soft); font-size: 0.8rem; margin-left: 2px; }
-  .see-more { font-size: 0.78rem; color: var(--moss); font-weight: 600; margin-top: 0.4rem; background: none; border: 0; padding: 0; cursor: pointer; text-align: left; font-family: var(--font-body); }
+  .weight-note { font-size: 0.75rem; color: var(--moss); background: rgba(169,190,150,0.16); padding: 0.38rem 0.58rem; border-radius: 999px; text-align: center; white-space: nowrap; }
+  .product-actions { display: grid; grid-template-columns: 1fr auto; gap: 0.55rem; align-items: center; margin-top: 0.95rem; }
+  .see-more { font-size: 0.82rem; color: var(--moss); font-weight: 600; background: rgba(169,190,150,0.14); border: 1px solid rgba(169,190,150,0.45); padding: 0.72rem 0.9rem; border-radius: 12px; cursor: pointer; text-align: center; font-family: var(--font-body); transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease; }
+  .see-more:hover { background: var(--sage-soft); color: var(--forest); border-color: rgba(62,92,52,0.3); }
 
   /* MODAL composição/benefícios */
   .modal-overlay { position: fixed; inset: 0; background: rgba(27,42,22,0.55); display: none; align-items: center; justify-content: center; z-index: 100; padding: 1.5rem; }
@@ -136,8 +150,7 @@
   .benefits-list li { padding: 0.5rem 0; border-bottom: 1px solid var(--oat-deep); font-size: 0.95rem; }
   .benefits-list li:last-child { border-bottom: none; }
   .benefits-list li::before { content: "✓ "; color: var(--moss); font-weight: 700; }
-  .product-actions { display: flex; gap: 0.5rem; align-items: center; justify-content: space-between; margin-top: 0.6rem; }
-  .add-button { padding: 0.5rem 0.7rem; font-size: 0.78rem; }
+  .add-button { padding: 0.72rem 0.95rem; font-size: 0.8rem; white-space: nowrap; justify-content: center; }
   .quantity-control { display: flex; align-items: center; gap: 0.5rem; margin-top: 1rem; }
   .quantity-control button, .line-quantity button { width: 32px; height: 32px; border: 1px solid var(--sage); border-radius: 50%; background: var(--oat); color: var(--forest); cursor: pointer; font-weight: 700; }
   .quantity-control select { border: 1px solid var(--sage); border-radius: 8px; padding: 0.45rem; font: inherit; background: var(--white); }
@@ -605,6 +618,29 @@ const PRODUCT_VISUALS = {
 
 const productImageCache = new Map();
 
+const CATEGORY_LABELS = {
+  cereais: "Cereais",
+  leguminosas: "Leguminosas",
+  sementes: "Sementes",
+  chas: "Chás",
+  snacks: "Snacks",
+  oleaginosas: "Oleaginosas",
+  temperos: "Temperos",
+  liofilizados: "Liofilizados"
+};
+
+function primaryCategory(product) {
+  return (product.categories && product.categories.length ? product.categories[0] : product.cat) || "produtos";
+}
+
+function categoryLabel(product) {
+  return CATEGORY_LABELS[primaryCategory(product)] || "Produtos";
+}
+
+function productHighlight(product) {
+  return (product.benefits && product.benefits.length ? product.benefits[0] : "Seleção especial a granel").replace(/\.$/, "");
+}
+
 function seededRandom(text) {
   let seed = Array.from(text).reduce((value, char) => Math.imul(value ^ char.charCodeAt(0), 2654435761), 2166136261) >>> 0;
   return () => { seed += 0x6D2B79F5; let value = seed; value = Math.imul(value ^ value >>> 15, value | 1); value ^= value + Math.imul(value ^ value >>> 7, value | 61); return ((value ^ value >>> 14) >>> 0) / 4294967296; };
@@ -625,14 +661,14 @@ function visualParticle(kind, x, y, size, rotation, fill, accent) {
 }
 
 function productImage(product) {
+  // Imagens reais pesquisadas na web por nome do produto.
+  // O endpoint do Bing retorna uma miniatura compatível com a busca e mantém
+  // o catálogo leve, sem incorporar dezenas de arquivos pesados no HTML.
   if (productImageCache.has(product.id)) return productImageCache.get(product.id);
-  const visual = PRODUCT_VISUALS[product.id] || PRODUCT_VISUALS["arroz-integral"], random = seededRandom(product.id);
-  const count = ["flower","toast","chip","fruit"].includes(visual.kind) ? 28 : 58;
-  let particles = "";
-  for (let index=0; index<count; index++) { const angle=random()*Math.PI*2, radius=Math.sqrt(random())*118, x=400+Math.cos(angle)*radius*1.55, y=264+Math.sin(angle)*radius*.65, size=(visual.kind==="powder"?4:7)+random()*(visual.kind==="flower"?10:8); particles += visualParticle(visual.kind,x,y,size,random()*180,visual.fill,visual.accent); }
-  const safeName = product.name.replace(/[&<>"']/g, character => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&apos;"}[character]));
-  const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" role="img" aria-label="${safeName}"><defs><linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="${visual.background}"/><stop offset="1" stop-color="${visual.accent}"/></linearGradient><filter id="shadow"><feDropShadow dx="0" dy="12" stdDeviation="12" flood-color="#1b2a16" flood-opacity=".28"/></filter><clipPath id="bowl"><ellipse cx="400" cy="270" rx="250" ry="145"/></clipPath></defs><rect width="800" height="600" fill="url(#bg)"/><circle cx="110" cy="88" r="110" fill="#fff" opacity=".08"/><circle cx="718" cy="520" r="170" fill="#fff" opacity=".06"/><g filter="url(#shadow)"><ellipse cx="400" cy="305" rx="270" ry="160" fill="#f5efe2"/><ellipse cx="400" cy="270" rx="250" ry="145" fill="${visual.background}"/><g clip-path="url(#bowl)">${particles}</g><path d="M150 290 Q400 455 650 290 Q625 470 400 490 Q175 470 150 290Z" fill="#e8dfcd" opacity=".96"/></g><rect x="170" y="500" width="460" height="66" rx="33" fill="#1b2a16" opacity=".94"/><text x="400" y="543" text-anchor="middle" font-family="Arial, sans-serif" font-size="27" font-weight="700" fill="#f6f1e4">${safeName}</text></svg>`;
-  const dataUri=`data:image/svg+xml;charset=UTF-8,${encodeURIComponent(svg)}`; productImageCache.set(product.id,dataUri); return dataUri;
+  const query = encodeURIComponent(`${product.name} a granel produto natural`);
+  const imageUrl = `https://tse2.mm.bing.net/th?q=${query}&w=900&h=700&c=7&rs=1&p=0`;
+  productImageCache.set(product.id, imageUrl);
+  return imageUrl;
 }
 
 function productId(name) {
@@ -670,13 +706,27 @@ function renderProducts(filter) {
       const card = document.createElement("article");
       card.className = "product-card reveal";
       card.innerHTML = `
-        <div class="swatch ${p.swatch}"><img class="product-image" src="${productImage(p)}" alt="${p.name} a granel" loading="lazy" decoding="async" /></div>
+        <div class="product-media">
+          <div class="product-badges">
+            <span class="product-pill">${categoryLabel(p)}</span>
+            <span class="product-pill product-kind">A granel</span>
+          </div>
+          <div class="product-frame swatch ${p.swatch}"><img class="product-image" src="${productImage(p)}" alt="${p.name} a granel" loading="lazy" decoding="async" /></div>
+        </div>
         <div class="product-info">
+          <p class="product-subtitle">Seleção natural</p>
           <h3>${p.name}</h3>
-          <p class="price">${formatMoney(priceInCents(p) / 10)}<span>/100g</span></p>
+          <p class="product-benefit">${productHighlight(p)}</p>
+          <div class="product-footer">
+            <div class="price-wrap">
+              <span class="price-label">Preço inicial</span>
+              <p class="price">${formatMoney(priceInCents(p) / 10)}<span>/100g</span></p>
+            </div>
+            <span class="weight-note">100g • 250g • 500g • 1kg</span>
+          </div>
           <div class="product-actions">
-            <button class="see-more details-button" type="button">Ver composição</button>
-            <button class="btn btn-primary add-button" type="button">Adicionar</button>
+            <button class="see-more details-button" type="button">Ver detalhes</button>
+            <button class="btn btn-primary add-button" type="button">+ 100g</button>
           </div>
         </div>`;
       card.addEventListener("click", () => openModal(p));
@@ -707,7 +757,8 @@ const modalContent = document.getElementById("modalContent");
 function openModal(p) {
   modalContent.innerHTML = `
     <button class="modal-close" type="button" aria-label="Fechar detalhes do produto">✕</button>
-    <div class="modal-swatch swatch ${p.swatch}"><img class="product-image" src="${productImage(p)}" alt="${p.name} a granel" /></div>
+    <div class="modal-swatch product-frame swatch ${p.swatch}"><img class="product-image" src="${productImage(p)}" alt="${p.name} a granel" /></div>
+    <p class="product-subtitle">${categoryLabel(p)} • A granel</p>
     <h3 id="modalTitle">${p.name}</h3>
     <p class="modal-price">${formatMoney(priceInCents(p) / 10)}/100g</p>
     <p class="modal-section-title">Composição nutricional (por ${p.nutri.serving})</p>
