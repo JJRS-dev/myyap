@@ -1,14 +1,943 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta http-equiv="refresh" content="0; url=purograne.html" />
-  <title>Puro a Granel</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="description" content="Compre cereais, leguminosas, sementes, chás, snacks e temperos a granel na quantidade ideal para você." />
+<meta name="theme-color" content="#1b2a16" />
+<meta property="og:title" content="Puro a Granel" />
+<meta property="og:description" content="Produtos a granel, menos desperdício e pedido fácil pelo WhatsApp." />
+<meta property="og:type" content="website" />
+<title>Puro a Granel | Produtos naturais na medida certa</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,500;0,600;1,500&family=Work+Sans:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --oat: #f6f1e4; --oat-deep: #ece3cf; --white: #ffffff;
+    --forest: #1b2a16; --forest-soft: #2a3d23;
+    --moss: #3e5c34; --moss-dark: #2f4627;
+    --sage: #a9be96; --sage-soft: #d7e2cc; --wheat: #c79a2b;
+    --font-display: "Fraunces", serif;
+    --font-body: "Work Sans", sans-serif;
+    --font-mono: "Space Mono", monospace;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { background: var(--oat); color: var(--forest); font-family: var(--font-body); line-height: 1.5; }
+  .container { max-width: 1180px; margin: 0 auto; padding: 0 2rem; }
+  h1, h2, h3 { font-family: var(--font-display); font-weight: 500; line-height: 1.08; letter-spacing: -0.01em; }
+  .eyebrow { font-family: var(--font-mono); font-size: 0.75rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--moss); }
+  a { color: inherit; text-decoration: none; }
+  .btn { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.85rem 1.7rem; border-radius: 999px; font-weight: 600; font-size: 0.95rem; border: 1.5px solid transparent; cursor: pointer; transition: transform 0.2s ease, box-shadow 0.2s ease; }
+  .btn-primary { background: var(--moss); color: var(--oat); }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 10px 24px -8px rgba(46,70,39,0.55); }
+  .btn-primary:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+  .btn-ghost { background: transparent; border-color: var(--forest); color: var(--forest); }
+  .btn-ghost:hover { background: var(--forest); color: var(--oat); }
+
+  /* NAV */
+  nav.top { position: sticky; top: 0; z-index: 50; background: rgba(246,241,228,0.9); backdrop-filter: blur(10px); border-bottom: 1px solid var(--sage-soft); }
+  .nav-inner { display: flex; align-items: center; justify-content: space-between; height: 76px; }
+  .logo { font-family: var(--font-display); font-style: italic; font-size: 1.4rem; }
+  .logo span { color: var(--moss); }
+  .nav-links { display: flex; align-items: center; gap: 1.8rem; font-weight: 500; }
+  .nav-links a:not(.cta):hover { color: var(--moss); }
+  .cta { padding: 0.6rem 1.3rem; font-size: 0.85rem; }
+  .nav-toggle { display: none; background: none; border: none; flex-direction: column; gap: 5px; padding: 8px; cursor: pointer; }
+  .nav-toggle span { width: 22px; height: 2px; background: var(--forest); }
+  .cart-button { padding: 0.6rem 1rem; font-size: 0.85rem; white-space: nowrap; }
+
+  /* HERO */
+  .hero { position: relative; overflow: hidden; padding: 6rem 0 4rem; background: radial-gradient(circle at 80% 0%, var(--sage-soft) 0%, var(--oat) 55%); }
+  .hero .container { position: relative; z-index: 1; max-width: 760px; }
+  .headline { font-size: clamp(2.2rem, 5.2vw, 4rem); margin: 0.6rem 0 1.6rem; opacity: 0; animation: rise 0.7s ease forwards 0.15s; }
+  .subhead { font-size: 1.1rem; max-width: 46ch; color: var(--forest-soft); margin-bottom: 2rem; opacity: 0; animation: rise 0.6s ease forwards 0.5s; }
+  .actions { display: flex; gap: 1rem; flex-wrap: wrap; opacity: 0; animation: rise 0.6s ease forwards 0.65s; }
+  @keyframes rise { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+  .grains { position: absolute; inset: 0; z-index: 0; opacity: 0.6; pointer-events: none; }
+  .grain { position: absolute; border-radius: 50%; opacity: 0; animation: fall 0.9s cubic-bezier(0.22,1,0.36,1) forwards; }
+  @keyframes fall { from { opacity: 0; transform: translateY(-14px) rotate(-20deg); } to { opacity: 0.9; transform: translateY(0) rotate(0deg); } }
+
+  /* SECTION HEADER helper */
+  .section-head { max-width: 640px; margin-bottom: 2.5rem; }
+  .section-head h2 { font-size: clamp(1.8rem, 3.2vw, 2.4rem); margin: 0.5rem 0 0.6rem; }
+  .section-head p { color: var(--forest-soft); font-size: 1.02rem; }
+  .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.6s ease, transform 0.6s ease; }
+  .reveal.in { opacity: 1; transform: translateY(0); }
+
+  /* PROMOÇÕES */
+  .promos { padding: 3.5rem 0; }
+  .promo-banner { background: var(--wheat); border-radius: 20px; padding: 1.6rem 2rem; display: flex; align-items: center; gap: 1.2rem; margin-bottom: 2rem; flex-wrap: wrap; }
+  .promo-banner .tag { font-family: var(--font-mono); font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.1em; background: var(--forest); color: var(--wheat); padding: 0.3rem 0.7rem; border-radius: 999px; }
+  .promo-banner strong { font-family: var(--font-display); font-size: 1.3rem; color: var(--forest); }
+  .promo-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.2rem; }
+  .promo-card { background: var(--white); border: 1px solid var(--sage-soft); border-radius: 14px; padding: 1.4rem; position: relative; overflow: hidden; }
+  .promo-card .badge { position: absolute; top: 0; right: 0; background: var(--moss); color: var(--oat); font-family: var(--font-mono); font-weight: 700; font-size: 0.85rem; padding: 0.35rem 0.9rem; border-bottom-left-radius: 12px; }
+  .promo-card h3 { font-size: 1.15rem; margin: 0.3rem 0 0.4rem; padding-right: 3.5rem; }
+  .promo-card p { color: var(--forest-soft); font-size: 0.92rem; margin-bottom: 0.8rem; }
+  .promo-card .prices { display: flex; align-items: baseline; gap: 0.5rem; }
+  .promo-card .old { text-decoration: line-through; color: var(--forest-soft); font-family: var(--font-mono); font-size: 0.85rem; }
+  .promo-card .new { font-family: var(--font-mono); font-weight: 700; color: var(--moss-dark); font-size: 1.2rem; }
+
+  /* PRODUTOS */
+  .products { padding: 3.5rem 0; background: var(--oat-deep); }
+  .filter-row { display: flex; gap: 0.6rem; flex-wrap: wrap; margin-bottom: 2rem; }
+  .filter-btn { font-family: var(--font-body); font-size: 0.88rem; font-weight: 500; padding: 0.55rem 1.1rem; border-radius: 999px; border: 1px solid var(--sage-soft); background: var(--white); cursor: pointer; transition: background 0.2s, color 0.2s; }
+  .filter-btn.active, .filter-btn:hover { background: var(--moss); color: var(--oat); border-color: var(--moss); }
+  .products-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; }
+  .product-card { background: var(--white); border-radius: 14px; overflow: hidden; border: 1px solid var(--sage-soft); cursor: pointer; transition: transform 0.25s ease, box-shadow 0.25s ease; }
+  .product-card:hover { transform: translateY(-6px); box-shadow: 0 24px 36px -24px rgba(27,42,22,0.4); }
+  .swatch { aspect-ratio: 4/3; }
+  .product-image { display: block; width: 100%; height: 100%; object-fit: cover; background: var(--oat-deep); transition: transform 0.35s ease; }
+  .product-card:hover .product-image { transform: scale(1.025); }
+  :focus-visible { outline: 3px solid var(--wheat); outline-offset: 3px; }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; } }
+  .swatch.rice { background: radial-gradient(circle at 30% 30%, #f2ecd8, #e4dcc0); background-size: 6px 6px; }
+  .swatch.bean { background: radial-gradient(circle at 20% 30%, #8a4a2c 2px, transparent 3px), radial-gradient(circle at 60% 65%, #7a3f24 2px, transparent 3px), #b8703f; background-size: 14px 14px; }
+  .swatch.oat { background: repeating-linear-gradient(100deg, #f0e6cd, #f0e6cd 6px, #e5d9b8 6px, #e5d9b8 8px); }
+  .swatch.quinoa { background: radial-gradient(circle at 40% 40%, #ded9b0 2px, transparent 3px), #efe9c9; background-size: 10px 10px; }
+  .swatch.lentil { background: radial-gradient(circle at 35% 40%, #c96b3d 3px, transparent 4px), #d98a53; background-size: 12px 12px; }
+  .swatch.chickpea { background: radial-gradient(circle at 40% 40%, #e8d391 4px, transparent 5px), #f2e3ac; background-size: 16px 16px; }
+  .swatch.nut { background: linear-gradient(135deg, #8a6a43, #c9a26a); }
+  .swatch.almond { background: linear-gradient(135deg, #d9c093, #f0dfb8); }
+  .swatch.chia { background: radial-gradient(circle at 45% 45%, #2a2a2a 1.5px, transparent 2.5px), #4a4a42; background-size: 6px 6px; }
+  .swatch.linhaca { background: radial-gradient(circle at 40% 40%, #7a4a1a 2px, transparent 3px), #a56b2c; background-size: 8px 8px; }
+  .swatch.chamomile { background: radial-gradient(circle at 35% 40%, #fff2a8 3px, transparent 4px), #d9b85a; background-size: 16px 16px; }
+  .swatch.hibiscus { background: radial-gradient(circle at 35% 40%, #8f2035 3px, transparent 4px), #c34d58; background-size: 14px 14px; }
+  .swatch.fennel { background: repeating-linear-gradient(120deg, #d8c88b, #d8c88b 5px, #b9a568 5px, #b9a568 7px); }
+  .swatch.toast { background: repeating-linear-gradient(135deg, #d29a5b, #d29a5b 8px, #f0c98d 8px, #f0c98d 14px); }
+  .swatch.sweet-potato { background: repeating-linear-gradient(110deg, #b95b35, #b95b35 7px, #e49a5c 7px, #e49a5c 13px); }
+  .swatch.peanut { background: radial-gradient(ellipse at 35% 40%, #b8793d 4px, transparent 5px), #d5a064; background-size: 15px 11px; }
+  .swatch.spice { background: radial-gradient(circle at 35% 40%, #9d432b 3px, transparent 4px), #d58a4b; background-size: 12px 12px; }
+  .swatch.turmeric { background: radial-gradient(circle at 35% 40%, #f6c52f 3px, transparent 4px), #d88716; background-size: 13px 13px; }
+  .swatch.dried-fruit { background: radial-gradient(circle at 35% 40%, #c95b3e 4px, transparent 5px), #e7a06d; background-size: 17px 17px; }
+  .swatch.dried-banana { background: repeating-linear-gradient(25deg, #f5d67d, #f5d67d 8px, #d8ad4c 8px, #d8ad4c 12px); }
+  .product-info { padding: 0.9rem 1rem 1.1rem; }
+  .product-info h3 { font-family: var(--font-body); font-size: 1rem; font-weight: 600; margin-bottom: 0.3rem; }
+  .price { font-family: var(--font-mono); font-weight: 700; color: var(--moss-dark); }
+  .price span { font-weight: 400; color: var(--forest-soft); font-size: 0.8rem; margin-left: 2px; }
+  .see-more { font-size: 0.78rem; color: var(--moss); font-weight: 600; margin-top: 0.4rem; }
+
+  /* MODAL composição/benefícios */
+  .modal-overlay { position: fixed; inset: 0; background: rgba(27,42,22,0.55); display: none; align-items: center; justify-content: center; z-index: 100; padding: 1.5rem; }
+  .modal-overlay.open { display: flex; }
+  .modal { background: var(--white); border-radius: 20px; max-width: 560px; width: 100%; max-height: 85vh; overflow-y: auto; padding: 2rem; position: relative; }
+  .modal-close { position: absolute; top: 1rem; right: 1rem; width: 32px; height: 32px; border-radius: 50%; background: var(--oat-deep); border: none; cursor: pointer; font-size: 1.1rem; }
+  .modal-swatch { width: 100%; aspect-ratio: 3/1; border-radius: 12px; margin-bottom: 1.2rem; }
+  .modal h3 { font-size: 1.5rem; margin-bottom: 0.3rem; }
+  .modal .modal-price { font-family: var(--font-mono); color: var(--moss-dark); font-weight: 700; margin-bottom: 1rem; }
+  .modal-section-title { font-family: var(--font-mono); font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--moss); margin: 1.2rem 0 0.6rem; }
+  .nutri-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.6rem; margin-bottom: 0.4rem; }
+  .nutri-item { background: var(--oat-deep); border-radius: 10px; padding: 0.7rem; text-align: center; }
+  .nutri-item .val { font-family: var(--font-mono); font-weight: 700; font-size: 1.1rem; display: block; }
+  .nutri-item .lbl { font-size: 0.72rem; color: var(--forest-soft); }
+  .benefits-list { list-style: none; }
+  .benefits-list li { padding: 0.5rem 0; border-bottom: 1px solid var(--oat-deep); font-size: 0.95rem; }
+  .benefits-list li:last-child { border-bottom: none; }
+  .benefits-list li::before { content: "✓ "; color: var(--moss); font-weight: 700; }
+  .product-actions { display: flex; gap: 0.5rem; align-items: center; justify-content: space-between; margin-top: 0.6rem; }
+  .add-button { padding: 0.5rem 0.7rem; font-size: 0.78rem; }
+  .quantity-control { display: flex; align-items: center; gap: 0.5rem; margin-top: 1rem; }
+  .quantity-control button, .line-quantity button { width: 32px; height: 32px; border: 1px solid var(--sage); border-radius: 50%; background: var(--oat); color: var(--forest); cursor: pointer; font-weight: 700; }
+  .quantity-control select { border: 1px solid var(--sage); border-radius: 8px; padding: 0.45rem; font: inherit; background: var(--white); }
+  .cart-overlay { position: fixed; inset: 0; background: rgba(27,42,22,0.55); display: none; justify-content: flex-end; z-index: 110; }
+  .cart-overlay.open { display: flex; }
+  .cart-panel { background: var(--oat); width: min(440px, 100%); height: 100%; overflow-y: auto; padding: 2rem; position: relative; }
+  .cart-panel h2 { font-size: 1.8rem; margin-bottom: 1.2rem; }
+  .cart-close { position: absolute; top: 1rem; right: 1rem; width: 32px; height: 32px; border: 0; border-radius: 50%; background: var(--oat-deep); cursor: pointer; }
+  .cart-empty { color: var(--forest-soft); padding: 2rem 0; }
+  .cart-line { display: grid; grid-template-columns: 1fr auto; gap: 0.5rem; padding: 1rem 0; border-bottom: 1px solid var(--sage-soft); }
+  .cart-line strong, .cart-line small { display: block; }
+  .cart-line small { color: var(--forest-soft); }
+  .line-quantity { display: flex; align-items: center; gap: 0.4rem; grid-column: 1 / -1; }
+  .line-quantity button { width: 26px; height: 26px; }
+  .remove-line { border: 0; background: transparent; color: var(--moss-dark); text-decoration: underline; cursor: pointer; }
+  .cart-summary { display: flex; justify-content: space-between; padding: 1.4rem 0; font-family: var(--font-mono); font-weight: 700; }
+  .cart-actions { display: grid; gap: 0.6rem; }
+  .checkout { display: none; margin-top: 1.5rem; border-top: 1px solid var(--sage-soft); padding-top: 1.5rem; }
+  .checkout.open { display: block; }
+  .checkout h3 { margin-bottom: 1rem; }
+  .checkout-form { display: grid; gap: 0.7rem; }
+  .checkout-form input, .checkout-form select { width: 100%; padding: 0.75rem 0.9rem; border: 1px solid var(--sage); border-radius: 8px; font: inherit; background: var(--white); }
+  .address-fields { display: grid; gap: 0.7rem; }
+  .address-fields[hidden] { display: none; }
+  .form-error { color: #9f2d2d; font-size: 0.8rem; }
+  @media (max-width: 640px) { .cart-button { width: 100%; justify-content: center; } .cart-panel { padding: 1.5rem; } }
+
+  /* STEPS */
+  .steps { padding: 3.5rem 0; background: var(--forest); color: var(--oat); }
+  .steps .section-head h2 { color: var(--oat); }
+  .steps .section-head p { color: var(--sage-soft); }
+  .steps-list { list-style: none; display: flex; flex-direction: column; gap: 1.6rem; }
+  .step { display: grid; grid-template-columns: 80px 1fr; gap: 1.6rem; padding-bottom: 1.6rem; border-bottom: 1px solid rgba(246,241,228,0.15); }
+  .steps-list li:last-child { border-bottom: none; padding-bottom: 0; }
+  .step-num { font-family: var(--font-mono); font-size: 2.1rem; font-weight: 700; color: var(--wheat); line-height: 1; }
+  .step h3 { color: var(--oat); font-size: 1.25rem; margin-bottom: 0.3rem; }
+  .step p { color: var(--sage-soft); max-width: 52ch; font-size: 0.95rem; }
+
+  /* CADASTRO */
+  .cadastro { padding: 3.5rem 0; }
+  .cadastro-box { background: var(--moss); color: var(--oat); border-radius: 24px; padding: 2.6rem 2rem; display: flex; justify-content: space-between; align-items: center; gap: 2rem; flex-wrap: wrap; }
+  .cadastro-box h2 { color: var(--oat); font-size: clamp(1.5rem, 3vw, 2rem); max-width: 20ch; margin-bottom: 0.5rem; }
+  .cadastro-box p { color: var(--sage-soft); max-width: 38ch; font-size: 0.95rem; }
+  .cadastro-form { display: flex; gap: 0.6rem; flex-wrap: wrap; align-items: flex-start; max-width: 420px; }
+  .cadastro-form input { padding: 0.8rem 1.1rem; border-radius: 999px; border: none; font-family: var(--font-body); font-size: 0.92rem; flex: 1 1 160px; min-width: 150px; }
+  .cadastro-form button { flex: 1 1 100%; }
+  .form-msg { font-family: var(--font-mono); font-size: 0.78rem; width: 100%; margin-top: 0.3rem; }
+  .form-msg.ok { color: var(--wheat); }
+  .form-msg.err { color: #ffd7d7; }
+
+  /* FOOTER */
+  footer.site { background: var(--forest); color: var(--sage-soft); padding-top: 3rem; }
+  .footer-inner { display: flex; justify-content: space-between; gap: 2rem; flex-wrap: wrap; padding-bottom: 3rem; border-bottom: 1px solid rgba(246,241,228,0.12); }
+  .footer-logo { font-family: var(--font-display); font-style: italic; font-size: 1.3rem; color: var(--oat); }
+  .footer-logo span { color: var(--wheat); }
+  .footer-cols { display: flex; gap: 3rem; }
+  .col-title { font-family: var(--font-mono); font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--wheat); margin-bottom: 0.5rem; }
+  .footer-cols a { display: block; padding: 0.2rem 0; font-size: 0.9rem; }
+  .footer-cols a:hover { color: var(--oat); }
+  .copy { text-align: center; font-size: 0.76rem; padding: 1rem 0; color: rgba(246,241,228,0.5); }
+
+  @media (max-width: 960px) {
+    .promo-grid { grid-template-columns: 1fr; }
+    .products-grid { grid-template-columns: repeat(2, 1fr); }
+    .nutri-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 640px) {
+    .nav-links { position: absolute; top: 76px; left: 0; right: 0; flex-direction: column; align-items: flex-start; gap: 1rem; background: var(--oat); padding: 1.5rem 2rem; border-bottom: 1px solid var(--sage-soft); display: none; }
+    .nav-links.open { display: flex; }
+    .nav-toggle { display: flex; }
+    .cta { width: 100%; justify-content: center; }
+    .step { grid-template-columns: 50px 1fr; }
+    .step-num { font-size: 1.6rem; }
+    .cadastro-box { flex-direction: column; align-items: flex-start; }
+    .cadastro-form { max-width: none; width: 100%; }
+  }
+</style>
 </head>
 <body>
-  <p>Abrindo o site...</p>
-  <script>
-    window.location.replace("purograne.html");
-  </script>
+
+<nav class="top">
+  <div class="container nav-inner">
+    <a href="#topo" class="logo">Puro <span>a Granel</span></a>
+    <button class="nav-toggle" id="navToggle" type="button" aria-label="Abrir menu" aria-expanded="false" aria-controls="navLinks"><span></span><span></span></button>
+    <div class="nav-links" id="navLinks">
+      <a href="#promocoes">Promoções</a>
+      <a href="#produtos">Produtos</a>
+      <a href="#como-funciona">Como funciona</a>
+      <button class="btn btn-ghost cart-button" id="cartToggle" type="button" aria-label="Abrir carrinho">Carrinho (<span id="cartCount">0</span>)</button>
+      <a href="#cadastro" class="btn btn-primary cta">Programa de pontos</a>
+    </div>
+  </div>
+</nav>
+
+<section class="hero" id="topo">
+  <div class="grains" id="grains"></div>
+  <div class="container">
+    <p class="eyebrow">Mercearia a granel</p>
+    <h1 class="headline">Grão a grão, do jeito que a natureza fez.</h1>
+    <p class="subhead">Cereais, leguminosas, sementes, chás, snacks e temperos a granel. Você escolhe a quantidade exata e finaliza o pedido pelo WhatsApp.</p>
+    <div class="actions">
+      <a href="#produtos" class="btn btn-primary">Ver produtos</a>
+      <a href="#promocoes" class="btn btn-ghost">Promoções da semana</a>
+    </div>
+  </div>
+</section>
+
+<section class="promos" id="promocoes">
+  <div class="container">
+    <div class="section-head reveal">
+      <p class="eyebrow">Toda semana tem novidade</p>
+      <h2>Promoções da semana</h2>
+      <p>Ofertas válidas de segunda a domingo. Aproveite enquanto durar o estoque.</p>
+    </div>
+    <div class="promo-banner reveal">
+      <span class="tag">Destaque</span>
+      <strong>Leve 1kg de Quinoa e ganhe 50g de Chia grátis</strong>
+    </div>
+    <div class="promo-grid" id="promotionsGrid"></div>
+  </div>
+</section>
+
+<section class="products" id="produtos">
+  <div class="container">
+    <div class="section-head reveal">
+      <p class="eyebrow">Prateleira a granel</p>
+      <h2>Escolha o grão, escolha o peso.</h2>
+      <p>Clique em qualquer produto para ver a composição nutricional e os benefícios para o corpo.</p>
+    </div>
+    <div class="filter-row reveal">
+      <button class="filter-btn active" data-filter="todos">Todos</button>
+      <button class="filter-btn" data-filter="cereais">Cereais</button>
+      <button class="filter-btn" data-filter="leguminosas">Leguminosas</button>
+      <button class="filter-btn" data-filter="sementes">Sementes</button>
+      <button class="filter-btn" data-filter="chas">Chás</button>
+      <button class="filter-btn" data-filter="snacks">Snacks</button>
+      <button class="filter-btn" data-filter="oleaginosas">Oleaginosas</button>
+      <button class="filter-btn" data-filter="temperos">Temperos</button>
+      <button class="filter-btn" data-filter="liofilizados">Liofilizados</button>
+    </div>
+    <div class="products-grid" id="productsGrid"></div>
+  </div>
+</section>
+
+<section class="steps" id="como-funciona">
+  <div class="container">
+    <div class="section-head reveal">
+      <p class="eyebrow" style="color: var(--sage);">Como funciona</p>
+      <h2>Três passos até a sua despensa.</h2>
+    </div>
+    <ol class="steps-list">
+      <li class="step reveal"><span class="step-num">01</span><div><h3>Escolha os produtos</h3><p>Navegue pelo catálogo e encontre cereais, leguminosas, sementes, chás, snacks e temperos.</p></div></li>
+      <li class="step reveal"><span class="step-num">02</span><div><h3>Defina a quantidade</h3><p>Selecione 100g, 250g, 500g ou 1kg e acompanhe o valor atualizado no carrinho.</p></div></li>
+      <li class="step reveal"><span class="step-num">03</span><div><h3>Finalize pelo WhatsApp</h3><p>Escolha retirada ou entrega, informe o pagamento e envie o pedido pronto para confirmação.</p></div></li>
+    </ol>
+  </div>
+</section>
+
+<section class="cadastro" id="cadastro">
+  <div class="container">
+    <div class="cadastro-box reveal">
+      <div>
+        <h2>Entre para o programa de pontos.</h2>
+        <p>Cadastre-se e acumule pontos a cada compra na loja. Avisamos por WhatsApp antes dos seus pontos vencerem.</p>
+      </div>
+      <form class="cadastro-form" id="cadastroForm">
+        <input type="text" name="nome" placeholder="Seu nome" autocomplete="name" minlength="2" required />
+        <input type="tel" name="telefone" placeholder="(27) 99999-9999" autocomplete="tel" pattern="\+?[0-9 ()-]{8,}" required />
+        <input type="email" name="email" placeholder="seu@email.com (opcional)" autocomplete="email" />
+        <button type="submit" class="btn btn-primary" id="cadastroBtn">Quero participar</button>
+        <p class="form-msg" id="cadastroMsg"></p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<footer class="site">
+  <div class="container footer-inner">
+    <div>
+      <p class="footer-logo">Puro <span>a Granel</span></p>
+      <p style="margin-top:0.4rem; font-size:0.88rem;">Grão a grão, sem desperdício.</p>
+    </div>
+    <div class="footer-cols">
+      <div>
+        <p class="col-title">Loja</p>
+        <a href="#produtos">Produtos</a>
+        <a href="#promocoes">Promoções</a>
+        <a href="#como-funciona">Como funciona</a>
+      </div>
+      <div>
+        <p class="col-title">Contato</p>
+        <a href="mailto:ola@puroagranel.com.br">ola@puroagranel.com.br</a>
+        <a href="tel:+5527998441485">(27)99844-1485</a>
+      </div>
+    </div>
+  </div>
+  <p class="copy">© 2026 Puro a Granel. Todos os direitos reservados.</p>
+</footer>
+
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal" id="modalContent" role="dialog" aria-modal="true" aria-labelledby="modalTitle"></div>
+</div>
+
+<aside class="cart-overlay" id="cartOverlay" aria-hidden="true">
+  <div class="cart-panel" role="dialog" aria-modal="true" aria-labelledby="cartTitle">
+    <button class="cart-close" id="cartClose" type="button" aria-label="Fechar carrinho">✕</button>
+    <h2 id="cartTitle">Seu carrinho</h2>
+    <div id="cartItems"></div>
+    <div class="cart-summary"><span>Total</span><span id="cartTotal">R$ 0,00</span></div>
+    <div class="cart-actions">
+      <button class="btn btn-ghost" id="clearCart" type="button">Limpar carrinho</button>
+      <button class="btn btn-primary" id="checkoutToggle" type="button">Finalizar pedido</button>
+    </div>
+    <section class="checkout" id="checkoutSection" aria-labelledby="checkoutTitle">
+      <h3 id="checkoutTitle">Dados do pedido</h3>
+      <form class="checkout-form" id="checkoutForm">
+        <input name="nome" placeholder="Nome" autocomplete="name" required />
+        <input name="telefone" type="tel" placeholder="Telefone/WhatsApp" autocomplete="tel" required />
+        <input name="email" type="email" placeholder="E-mail (opcional)" autocomplete="email" />
+        <select name="recebimento" id="recebimento" required>
+          <option value="">Forma de recebimento</option><option>Retirada na loja</option><option>Entrega</option>
+        </select>
+        <div class="address-fields" id="addressFields" hidden>
+          <input name="cep" placeholder="CEP" inputmode="numeric" />
+          <input name="rua" placeholder="Rua" />
+          <input name="numero" placeholder="Número" />
+          <input name="complemento" placeholder="Complemento (opcional)" />
+          <input name="bairro" placeholder="Bairro" />
+          <input name="cidade" placeholder="Cidade" />
+        </div>
+        <select name="pagamento" required>
+          <option value="">Forma de pagamento</option><option>Pix</option><option>Cartão</option><option>Dinheiro</option>
+        </select>
+        <p class="form-error" id="checkoutError" role="alert"></p>
+        <button class="btn btn-primary" id="orderButton" type="submit">Enviar pedido pelo WhatsApp</button>
+      </form>
+    </section>
+  </div>
+</aside>
+
+<script>
+// ---------- Configuração ----------
+// Cole aqui a URL do seu Web App do Google Apps Script (veja CadastroUnificado.gs)
+const CADASTRO_WEBHOOK_URL = "https://script.google.com/macros/s/AKfycbyCETpGt2-bFaB_SOkGpWGR6QoVLY7WRBj3qHpevPlznlMWvpgH9VE9qfM906qpFTTDsQ/exec";
+
+// ---------- Dados dos produtos ----------
+const PRODUCTS = [
+  { name: "Arroz integral", price: "8,90", swatch: "rice", cat: "cereais",
+    nutri: { serving: "100g", cal: 111, protein: "2,6g", carbs: "23g", fiber: "1,8g" },
+    benefits: ["Rico em fibras, melhora a digestão", "Baixo índice glicêmico", "Fonte de magnésio e selênio"] },
+  { name: "Feijão carioca", price: "9,50", swatch: "bean", cat: "leguminosas",
+    nutri: { serving: "100g", cal: 127, protein: "8,7g", carbs: "23g", fiber: "8,5g" },
+    benefits: ["Alto teor de proteína vegetal", "Rico em ferro, previne anemia", "Ajuda no controle do colesterol"] },
+  { name: "Aveia em flocos", price: "6,20", swatch: "oat", cat: "cereais",
+    nutri: { serving: "100g", cal: 389, protein: "16,9g", carbs: "66g", fiber: "10,6g" },
+    benefits: ["Reduz o colesterol LDL", "Prolonga a saciedade", "Boa fonte de energia de digestão lenta"] },
+  { name: "Quinoa", price: "18,90", swatch: "quinoa", cat: "cereais",
+    nutri: { serving: "100g", cal: 368, protein: "14,1g", carbs: "64g", fiber: "7g" },
+    benefits: ["Proteína completa (todos os aminoácidos essenciais)", "Sem glúten", "Rica em antioxidantes"] },
+  { name: "Lentilha", price: "11,40", swatch: "lentil", cat: "leguminosas",
+    nutri: { serving: "100g", cal: 116, protein: "9g", carbs: "20g", fiber: "7,9g" },
+    benefits: ["Excelente fonte de ferro e folato", "Ajuda a estabilizar a glicemia", "Rica em fibras solúveis"] },
+  { name: "Grão-de-bico", price: "12,80", swatch: "chickpea", cat: "leguminosas",
+    nutri: { serving: "100g", cal: 164, protein: "8,9g", carbs: "27g", fiber: "7,6g" },
+    benefits: ["Rico em proteína e fibras", "Ajuda na saúde intestinal", "Fonte de manganês e folato"] },
+  { name: "Castanha-do-pará", price: "34,90", cat: "snacks", categories: ["snacks", "oleaginosas"], swatch: "nut",
+    nutri: { serving: "100g", cal: 663, protein: "14,3g", carbs: "12g", fiber: "7,7g" },
+    benefits: ["Maior fonte natural de selênio", "Antioxidante, protege as células", "Boa para a tireoide"] },
+  { name: "Amêndoas", price: "29,50", cat: "snacks", categories: ["snacks", "oleaginosas"], swatch: "almond",
+    nutri: { serving: "100g", cal: 580, protein: "21,3g", carbs: "20,3g", fiber: "12g" },
+    benefits: ["Rica em vitamina E", "Boas gorduras para o coração", "Ajuda no controle do apetite"] },
+  { name: "Chia", price: "22,00", swatch: "chia", cat: "sementes",
+    nutri: { serving: "100g", cal: 457, protein: "15,7g", carbs: "40g", fiber: "34g" },
+    benefits: ["Riquíssima em ômega-3", "Alta concentração de fibras", "Ajuda na saciedade e hidratação"] },
+  { name: "Linhaça", price: "15,50", swatch: "linhaca", cat: "sementes",
+    nutri: { serving: "100g", cal: 500, protein: "17g", carbs: "32,3g", fiber: "27,3g" },
+    benefits: ["Fonte vegetal de ômega-3", "Rica em lignanas antioxidantes", "Ajuda na regulação intestinal"] },
+  { name: "Camomila", price: "18,00", swatch: "chamomile", cat: "chas",
+    nutri: { serving: "100g", cal: 1, protein: "0g", carbs: "0,2g", fiber: "0g" },
+    benefits: ["Aroma suave e relaxante", "Ideal para o fim do dia", "Pode ser consumida quente ou gelada"] },
+  { name: "Hibisco", price: "22,00", swatch: "hibiscus", cat: "chas",
+    nutri: { serving: "100g", cal: 2, protein: "0g", carbs: "0,4g", fiber: "0g" },
+    benefits: ["Sabor levemente ácido", "Excelente para chás gelados", "Combina com frutas e especiarias"] },
+  { name: "Erva-doce", price: "16,50", swatch: "fennel", cat: "chas",
+    nutri: { serving: "100g", cal: 1, protein: "0g", carbs: "0,2g", fiber: "0g" },
+    benefits: ["Sabor adocicado e delicado", "Ótima após as refeições", "Pode ser combinada com camomila"] },
+  { name: "Torradas integrais", price: "14,90", swatch: "toast", cat: "snacks",
+    nutri: { serving: "100g", cal: 383, protein: "10,7g", carbs: "70g", fiber: "8g" },
+    benefits: ["Crocantes e leves", "Fonte de fibras", "Perfeitas para acompanhar pastas e patês"] },
+  { name: "Batata-doce temperada", price: "26,00", swatch: "sweet-potato", cat: "snacks",
+    nutri: { serving: "100g", cal: 350, protein: "5g", carbs: "66,7g", fiber: "10g" },
+    benefits: ["Assada e crocante", "Temperada com ervas", "Opção prática para um lanche"] },
+  { name: "Amendoim sabor barbecue", price: "19,90", cat: "snacks", categories: ["snacks", "oleaginosas"], swatch: "peanut",
+    nutri: { serving: "100g", cal: 567, protein: "23,3g", carbs: "20g", fiber: "8,3g" },
+    benefits: ["Sabor barbecue marcante", "Fonte de proteína vegetal", "Ideal para petiscar"] },
+  { name: "Amendoim sabor alho e ervas", price: "19,90", cat: "snacks", categories: ["snacks", "oleaginosas"], swatch: "peanut",
+    nutri: { serving: "100g", cal: 567, protein: "23,3g", carbs: "20g", fiber: "8,3g" },
+    benefits: ["Temperado com alho e ervas", "Crocante e saboroso", "Ideal para compartilhar"] },
+  { name: "Orégano", price: "32,00", swatch: "spice", cat: "temperos",
+    nutri: { serving: "5g", cal: 13, protein: "0,4g", carbs: "3,4g", fiber: "1,6g" },
+    benefits: ["Aroma intenso", "Ideal para massas e molhos", "Combina com legumes e saladas"] },
+  { name: "Páprica defumada", price: "38,00", swatch: "spice", cat: "temperos",
+    nutri: { serving: "5g", cal: 14, protein: "0,7g", carbs: "2,5g", fiber: "1,2g" },
+    benefits: ["Sabor defumado", "Realça carnes e legumes", "Pode ser usada em molhos"] },
+  { name: "Cúrcuma em pó", price: "29,00", swatch: "turmeric", cat: "temperos",
+    nutri: { serving: "5g", cal: 16, protein: "0,5g", carbs: "3,4g", fiber: "0,9g" },
+    benefits: ["Cor dourada natural", "Versátil em receitas salgadas", "Combina com arroz e sopas"] },
+  { name: "Morango liofilizado", price: "89,00", swatch: "dried-fruit", cat: "liofilizados",
+    nutri: { serving: "100g", cal: 340, protein: "7g", carbs: "75g", fiber: "16g" },
+    benefits: ["Crocância e sabor natural", "Sem necessidade de refrigeração", "Ideal para iogurtes e cereais"] },
+  { name: "Banana liofilizada", price: "72,00", swatch: "dried-banana", cat: "liofilizados",
+    nutri: { serving: "100g", cal: 360, protein: "4g", carbs: "85g", fiber: "10g" },
+    benefits: ["Textura crocante", "Sabor naturalmente adocicado", "Prática para lanches"] },
+  { name: "Manga liofilizada", price: "84,00", swatch: "dried-fruit", cat: "liofilizados",
+    nutri: { serving: "100g", cal: 350, protein: "3g", carbs: "85g", fiber: "7,5g" },
+    benefits: ["Sabor tropical", "Crocante e leve", "Combina com granolas e sobremesas"] },
+];
+
+const WEEKLY_PROMOTIONS = [
+  { product: "Castanha-do-pará", discount: 15, description: "Oleaginosas selecionadas com preço especial de lançamento." },
+  { product: "Aveia em flocos", discount: 10, description: "Ideal para o café da manhã. Estoque renovado toda quinta." },
+  { product: "Camomila", discount: 10, description: "Um chá suave para deixar sua rotina mais leve." },
+];
+
+const PRODUCT_VISUALS = {
+  "arroz-integral": {
+    "kind": "grain",
+    "background": "#d9cbb1",
+    "fill": "#eee1bf",
+    "accent": "#b89e6a"
+  },
+  "feijao-carioca": {
+    "kind": "bean",
+    "background": "#9b5a3b",
+    "fill": "#c8835d",
+    "accent": "#5d3025"
+  },
+  "aveia-em-flocos": {
+    "kind": "flake",
+    "background": "#d8c59f",
+    "fill": "#f0dfb8",
+    "accent": "#b18f58"
+  },
+  "quinoa": {
+    "kind": "seed",
+    "background": "#d8c9a7",
+    "fill": "#f3e8c8",
+    "accent": "#a98d59"
+  },
+  "lentilha": {
+    "kind": "seed",
+    "background": "#a95332",
+    "fill": "#d57d4c",
+    "accent": "#743621"
+  },
+  "grao-de-bico": {
+    "kind": "bean",
+    "background": "#cfb46f",
+    "fill": "#ebd08b",
+    "accent": "#9d7a3d"
+  },
+  "castanha-do-para": {
+    "kind": "nut",
+    "background": "#8a6245",
+    "fill": "#ead4a9",
+    "accent": "#5a3827"
+  },
+  "amendoas": {
+    "kind": "nut",
+    "background": "#b4865f",
+    "fill": "#d5aa78",
+    "accent": "#765038"
+  },
+  "chia": {
+    "kind": "seed",
+    "background": "#343531",
+    "fill": "#78766d",
+    "accent": "#d3cdbd"
+  },
+  "linhaca": {
+    "kind": "seed",
+    "background": "#835129",
+    "fill": "#b5783d",
+    "accent": "#e0aa62"
+  },
+  "camomila": {
+    "kind": "flower",
+    "background": "#8ba56f",
+    "fill": "#fff6d4",
+    "accent": "#e5bd42"
+  },
+  "hibisco": {
+    "kind": "flower",
+    "background": "#7d2537",
+    "fill": "#ca4a63",
+    "accent": "#f19aac"
+  },
+  "erva-doce": {
+    "kind": "leaf",
+    "background": "#879264",
+    "fill": "#c9be7d",
+    "accent": "#5f6f45"
+  },
+  "torradas-integrais": {
+    "kind": "toast",
+    "background": "#c99358",
+    "fill": "#e8bd79",
+    "accent": "#8f5d30"
+  },
+  "batata-doce-temperada": {
+    "kind": "chip",
+    "background": "#a85235",
+    "fill": "#d67a4f",
+    "accent": "#f0b36e"
+  },
+  "amendoim-sabor-barbecue": {
+    "kind": "bean",
+    "background": "#9c4f2e",
+    "fill": "#c77a3d",
+    "accent": "#5f281c"
+  },
+  "amendoim-sabor-alho-e-ervas": {
+    "kind": "bean",
+    "background": "#8b7447",
+    "fill": "#c79c58",
+    "accent": "#50643a"
+  },
+  "oregano": {
+    "kind": "leaf",
+    "background": "#536741",
+    "fill": "#849966",
+    "accent": "#30452a"
+  },
+  "paprica-defumada": {
+    "kind": "powder",
+    "background": "#8f2f23",
+    "fill": "#d64f32",
+    "accent": "#6e1e18"
+  },
+  "curcuma-em-po": {
+    "kind": "powder",
+    "background": "#c77712",
+    "fill": "#edae22",
+    "accent": "#8d4b0b"
+  },
+  "morango-liofilizado": {
+    "kind": "fruit",
+    "background": "#b83e48",
+    "fill": "#e9656b",
+    "accent": "#fff0cf"
+  },
+  "banana-liofilizada": {
+    "kind": "chip",
+    "background": "#c5a13e",
+    "fill": "#f0cf68",
+    "accent": "#9b7624"
+  },
+  "manga-liofilizada": {
+    "kind": "fruit",
+    "background": "#cf7f1f",
+    "fill": "#f2ad3d",
+    "accent": "#9b4c16"
+  }
+};
+
+const productImageCache = new Map();
+
+function seededRandom(text) {
+  let seed = Array.from(text).reduce((value, char) => Math.imul(value ^ char.charCodeAt(0), 2654435761), 2166136261) >>> 0;
+  return () => { seed += 0x6D2B79F5; let value = seed; value = Math.imul(value ^ value >>> 15, value | 1); value ^= value + Math.imul(value ^ value >>> 7, value | 61); return ((value ^ value >>> 14) >>> 0) / 4294967296; };
+}
+
+function visualParticle(kind, x, y, size, rotation, fill, accent) {
+  const transform = `translate(${x.toFixed(1)} ${y.toFixed(1)}) rotate(${rotation.toFixed(1)})`;
+  if (kind === "flower") return `<g transform="${transform}"><g fill="${fill}"><ellipse rx="${size*.35}" ry="${size}" transform="rotate(0) translate(0 ${-size*.7})"/><ellipse rx="${size*.35}" ry="${size}" transform="rotate(60) translate(0 ${-size*.7})"/><ellipse rx="${size*.35}" ry="${size}" transform="rotate(120) translate(0 ${-size*.7})"/></g><circle r="${size*.42}" fill="${accent}"/></g>`;
+  if (kind === "leaf") return `<g transform="${transform}"><ellipse rx="${size*.55}" ry="${size}" fill="${fill}"/><path d="M0 ${-size*.75}V${size*.75}" stroke="${accent}" stroke-width="1.4"/></g>`;
+  if (kind === "toast") return `<g transform="${transform}"><rect x="${-size*.7}" y="${-size*.8}" width="${size*1.4}" height="${size*1.6}" rx="${size*.28}" fill="${fill}" stroke="${accent}" stroke-width="2"/><circle cx="${-size*.25}" cy="${-size*.2}" r="1.3" fill="${accent}"/><circle cx="${size*.25}" cy="${size*.25}" r="1.1" fill="${accent}"/></g>`;
+  if (kind === "chip") return `<g transform="${transform}"><ellipse rx="${size}" ry="${size*.68}" fill="${fill}" stroke="${accent}" stroke-width="2"/><ellipse rx="${size*.48}" ry="${size*.3}" fill="none" stroke="${accent}" stroke-width="1" opacity=".65"/></g>`;
+  if (kind === "powder") return `<g transform="${transform}"><circle r="${size}" fill="${fill}"/><circle cx="${-size*.25}" cy="${-size*.2}" r="${size*.22}" fill="${accent}" opacity=".45"/></g>`;
+  if (kind === "fruit") return `<g transform="${transform}"><path d="M0 ${-size} C${size*.9} ${-size*.75}, ${size} ${size*.35}, 0 ${size} C${-size} ${size*.35}, ${-size*.9} ${-size*.75}, 0 ${-size}Z" fill="${fill}" stroke="${accent}" stroke-width="1.5"/><circle cy="${size*.15}" r="${size*.18}" fill="${accent}"/></g>`;
+  if (kind === "flake") return `<g transform="${transform}"><path d="M${-size} 0 Q${-size*.35} ${-size*.7} 0 ${-size*.22} Q${size*.55} ${-size*.7} ${size} 0 Q${size*.4} ${size*.65} 0 ${size*.22} Q${-size*.55} ${size*.7} ${-size} 0Z" fill="${fill}" stroke="${accent}" stroke-width="1.2"/></g>`;
+  if (kind === "nut") return `<g transform="${transform}"><ellipse rx="${size*.62}" ry="${size}" fill="${fill}" stroke="${accent}" stroke-width="2"/><path d="M0 ${-size*.72} Q${size*.18} 0 0 ${size*.72}" fill="none" stroke="${accent}" stroke-width="1.5"/></g>`;
+  if (kind === "bean") return `<g transform="${transform}"><path d="M${-size*.7} ${-size*.55} C${size*.2} ${-size*1.2}, ${size*1.1} ${-size*.25}, ${size*.55} ${size*.55} C${size*.05} ${size*1.12}, ${-size*1.05} ${size*.55}, ${-size*.7} ${-size*.55}Z" fill="${fill}" stroke="${accent}" stroke-width="1.4"/><path d="M${-size*.18} ${-size*.25}Q0 0 ${size*.18} ${size*.2}" fill="none" stroke="${accent}" stroke-width="1.2"/></g>`;
+  return `<g transform="${transform}"><ellipse rx="${size*.42}" ry="${size}" fill="${fill}" stroke="${accent}" stroke-width="1.2"/></g>`;
+}
+
+function productImage(product) {
+  if (productImageCache.has(product.id)) return productImageCache.get(product.id);
+  const visual = PRODUCT_VISUALS[product.id] || PRODUCT_VISUALS["arroz-integral"], random = seededRandom(product.id);
+  const count = ["flower","toast","chip","fruit"].includes(visual.kind) ? 28 : 58;
+  let particles = "";
+  for (let index=0; index<count; index++) { const angle=random()*Math.PI*2, radius=Math.sqrt(random())*118, x=400+Math.cos(angle)*radius*1.55, y=264+Math.sin(angle)*radius*.65, size=(visual.kind==="powder"?4:7)+random()*(visual.kind==="flower"?10:8); particles += visualParticle(visual.kind,x,y,size,random()*180,visual.fill,visual.accent); }
+  const safeName = product.name.replace(/[&<>"']/g, character => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&apos;"}[character]));
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" role="img" aria-label="${safeName}"><defs><linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="${visual.background}"/><stop offset="1" stop-color="${visual.accent}"/></linearGradient><filter id="shadow"><feDropShadow dx="0" dy="12" stdDeviation="12" flood-color="#1b2a16" flood-opacity=".28"/></filter><clipPath id="bowl"><ellipse cx="400" cy="270" rx="250" ry="145"/></clipPath></defs><rect width="800" height="600" fill="url(#bg)"/><circle cx="110" cy="88" r="110" fill="#fff" opacity=".08"/><circle cx="718" cy="520" r="170" fill="#fff" opacity=".06"/><g filter="url(#shadow)"><ellipse cx="400" cy="305" rx="270" ry="160" fill="#f5efe2"/><ellipse cx="400" cy="270" rx="250" ry="145" fill="${visual.background}"/><g clip-path="url(#bowl)">${particles}</g><path d="M150 290 Q400 455 650 290 Q625 470 400 490 Q175 470 150 290Z" fill="#e8dfcd" opacity=".96"/></g><rect x="170" y="500" width="460" height="66" rx="33" fill="#1b2a16" opacity=".94"/><text x="400" y="543" text-anchor="middle" font-family="Arial, sans-serif" font-size="27" font-weight="700" fill="#f6f1e4">${safeName}</text></svg>`;
+  const dataUri=`data:image/svg+xml;charset=UTF-8,${encodeURIComponent(svg)}`; productImageCache.set(product.id,dataUri); return dataUri;
+}
+
+function productId(name) {
+  return name.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+}
+
+PRODUCTS.forEach(product => { product.id = productId(product.name); });
+
+function productImage(product) {
+  return PRODUCT_IMAGES[product.swatch] || "";
+}
+
+function renderPromotions() {
+  const promotionsGrid = document.getElementById("promotionsGrid");
+  promotionsGrid.innerHTML = WEEKLY_PROMOTIONS.map(promotion => {
+    const product = PRODUCTS.find(item => item.name === promotion.product);
+    if (!product || promotion.discount <= 0 || promotion.discount >= 100) return "";
+    const originalPrice = priceInCents(product);
+    const promotionalPrice = Math.round(originalPrice * (100 - promotion.discount) / 100);
+    return `
+      <div class="promo-card reveal">
+        <span class="badge">-${promotion.discount}%</span>
+        <h3>${product.name}</h3>
+        <p>${promotion.description}</p>
+        <div class="prices"><span class="old">${formatMoney(originalPrice / 10)}</span><span class="new">${formatMoney(promotionalPrice / 10)}/100g</span></div>
+      </div>`;
+  }).join("");
+  observeReveal();
+}
+
+// ---------- Renderização dos produtos ----------
+const grid = document.getElementById("productsGrid");
+
+function renderProducts(filter) {
+  grid.innerHTML = "";
+  PRODUCTS
+    .filter(p => filter === "todos" || (p.categories || [p.cat]).includes(filter))
+    .forEach(p => {
+      const card = document.createElement("article");
+      card.className = "product-card reveal";
+      card.innerHTML = `
+        <div class="swatch ${p.swatch}"><img class="product-image" src="${productImage(p)}" alt="${p.name} a granel" loading="lazy" decoding="async" /></div>
+        <div class="product-info">
+          <h3>${p.name}</h3>
+          <p class="price">${formatMoney(priceInCents(p) / 10)}<span>/100g</span></p>
+          <div class="product-actions">
+            <p class="see-more">Ver composição</p>
+            <button class="btn btn-primary add-button" type="button">Adicionar</button>
+          </div>
+        </div>`;
+      card.tabIndex = 0;
+      card.setAttribute("role", "button");
+      card.setAttribute("aria-label", `Ver detalhes de ${p.name}`);
+      card.addEventListener("click", () => openModal(p));
+      card.addEventListener("keydown", event => { if (event.key === "Enter" || event.key === " ") { event.preventDefault(); openModal(p); } });
+      card.querySelector(".add-button").addEventListener("click", event => {
+        event.stopPropagation();
+        addToCart(p, 100);
+      });
+      grid.appendChild(card);
+    });
+  observeReveal();
+}
+
+document.querySelectorAll(".filter-btn").forEach(btn => {
+  btn.addEventListener("click", () => {
+    document.querySelectorAll(".filter-btn").forEach(b => b.classList.remove("active"));
+    btn.classList.add("active");
+    renderProducts(btn.dataset.filter);
+  });
+});
+
+renderProducts("todos");
+
+// ---------- Modal de composição/benefícios ----------
+const overlay = document.getElementById("modalOverlay");
+const modalContent = document.getElementById("modalContent");
+
+function openModal(p) {
+  modalContent.innerHTML = `
+    <button class="modal-close" type="button" aria-label="Fechar detalhes do produto">✕</button>
+    <div class="modal-swatch swatch ${p.swatch}"><img class="product-image" src="${productImage(p)}" alt="${p.name} a granel" /></div>
+    <h3 id="modalTitle">${p.name}</h3>
+    <p class="modal-price">${formatMoney(priceInCents(p) / 10)}/100g</p>
+    <p class="modal-section-title">Composição nutricional (por ${p.nutri.serving})</p>
+    <div class="nutri-grid">
+      <div class="nutri-item"><span class="val">${p.nutri.cal}</span><span class="lbl">calorias</span></div>
+      <div class="nutri-item"><span class="val">${p.nutri.protein}</span><span class="lbl">proteína</span></div>
+      <div class="nutri-item"><span class="val">${p.nutri.carbs}</span><span class="lbl">carboidratos</span></div>
+      <div class="nutri-item"><span class="val">${p.nutri.fiber}</span><span class="lbl">fibras</span></div>
+    </div>
+    <p class="modal-section-title">Benefícios para o corpo</p>
+    <ul class="benefits-list">${p.benefits.map(b => `<li>${b}</li>`).join("")}</ul>
+    <p class="modal-section-title">Quantidade</p>
+    <div class="quantity-control">
+      <button type="button" id="modalMinus" aria-label="Diminuir quantidade">−</button>
+      <select id="modalWeight" aria-label="Peso do produto">
+        <option value="100">100g</option><option value="250">250g</option><option value="500">500g</option><option value="1000">1kg</option>
+      </select>
+      <button type="button" id="modalPlus" aria-label="Aumentar quantidade">+</button>
+    </div>
+    <p class="price" id="modalCalculatedPrice"></p>
+    <button class="btn btn-primary" type="button" id="modalAdd">Adicionar ao carrinho</button>
+    <p class="form-msg" id="modalMsg" role="status"></p>
+  `;
+  overlay.classList.add("open");
+  const weight = modalContent.querySelector("#modalWeight");
+  const updatePrice = () => { modalContent.querySelector("#modalCalculatedPrice").textContent = formatMoney(priceInCents(p) * Number(weight.value) / 1000); };
+  modalContent.querySelector("#modalMinus").addEventListener("click", () => { weight.selectedIndex = Math.max(0, weight.selectedIndex - 1); updatePrice(); });
+  modalContent.querySelector("#modalPlus").addEventListener("click", () => { weight.selectedIndex = Math.min(weight.options.length - 1, weight.selectedIndex + 1); updatePrice(); });
+  weight.addEventListener("change", updatePrice);
+  modalContent.querySelector("#modalAdd").addEventListener("click", () => { addToCart(p, Number(weight.value)); modalContent.querySelector("#modalMsg").textContent = "Produto adicionado ao carrinho!"; });
+  modalContent.querySelector(".modal-close").addEventListener("click", closeModal);
+  modalContent.querySelector(".modal-close").focus();
+  updatePrice();
+}
+
+function closeModal() {
+  overlay.classList.remove("open");
+}
+
+overlay.addEventListener("click", (e) => {
+  if (e.target === overlay) closeModal();
+});
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Escape") closeModal();
+});
+
+// ---------- Grãos animados no hero ----------
+const colors = ["#3e5c34", "#c79a2b", "#a9be96", "#7a5230", "#8a9a5b"];
+const grainsContainer = document.getElementById("grains");
+let seed = 7;
+function rand() { seed = (seed * 9301 + 49297) % 233280; return seed / 233280; }
+for (let i = 0; i < 46; i++) {
+  const g = document.createElement("div");
+  g.className = "grain";
+  const size = 4 + rand() * 7;
+  g.style.left = rand() * 100 + "%";
+  g.style.top = rand() * 100 + "%";
+  g.style.width = size + "px";
+  g.style.height = (size * 0.6) + "px";
+  g.style.background = colors[Math.floor(rand() * colors.length)];
+  g.style.animationDelay = (rand() * 0.6) + "s";
+  grainsContainer.appendChild(g);
+}
+
+// ---------- Scroll reveal ----------
+function observeReveal() {
+  const els = document.querySelectorAll(".reveal:not(.in)");
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add("in");
+        io.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.15 });
+  els.forEach(el => io.observe(el));
+}
+observeReveal();
+
+// ---------- Menu mobile ----------
+document.getElementById("navToggle").addEventListener("click", () => {
+  const navLinks = document.getElementById("navLinks");
+  const isOpen = navLinks.classList.toggle("open");
+  document.getElementById("navToggle").setAttribute("aria-expanded", String(isOpen));
+});
+
+document.querySelectorAll(".nav-links a").forEach(link => link.addEventListener("click", () => {
+  document.getElementById("navLinks").classList.remove("open");
+  document.getElementById("navToggle").setAttribute("aria-expanded", "false");
+}));
+
+// ---------- Carrinho persistente ----------
+const CART_STORAGE_KEY = "puro-a-granel-carrinho";
+let cart = JSON.parse(localStorage.getItem(CART_STORAGE_KEY) || "[]");
+const cartOverlay = document.getElementById("cartOverlay");
+const cartItems = document.getElementById("cartItems");
+
+function priceInCents(product) { return Math.round(Number(product.price.replace(",", ".")) * 100); }
+function formatMoney(cents) { return (cents / 100).toLocaleString("pt-BR", { style: "currency", currency: "BRL" }); }
+function saveCart() { localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(cart)); }
+function cartTotalCents() { return cart.reduce((sum, item) => sum + priceInCents(item.product) * item.grams * item.quantity / 1000, 0); }
+
+function addToCart(product, grams) {
+  const existing = cart.find(item => item.product.name === product.name && item.grams === grams);
+  if (existing) existing.quantity += 1;
+  else cart.push({ product, grams, quantity: 1, productId: product.id });
+  saveCart();
+  renderCart();
+}
+
+function changeCartItem(index, amount) {
+  cart[index].quantity += amount;
+  if (cart[index].quantity <= 0) cart.splice(index, 1);
+  saveCart();
+  renderCart();
+}
+
+function renderCart() {
+  const count = cart.reduce((sum, item) => sum + item.quantity, 0);
+  document.getElementById("cartCount").textContent = count;
+  document.getElementById("cartTotal").textContent = formatMoney(cartTotalCents());
+  cartItems.innerHTML = cart.length ? cart.map((item, index) => `
+    <div class="cart-line">
+      <div><strong>${item.product.name}</strong><small>${item.grams >= 1000 ? "1kg" : item.grams + "g"} · ${formatMoney(priceInCents(item.product) / 10)}/100g · ${formatMoney(priceInCents(item.product) * item.grams / 1000)}</small></div>
+      <button class="remove-line" type="button" data-remove="${index}">Remover</button>
+      <div class="line-quantity"><button type="button" data-minus="${index}" aria-label="Diminuir ${item.product.name}">−</button><span>${item.quantity}</span><button type="button" data-plus="${index}" aria-label="Aumentar ${item.product.name}">+</button></div>
+    </div>`).join("") : '<p class="cart-empty">Seu carrinho está vazio.</p>';
+  cartItems.querySelectorAll("[data-minus]").forEach(button => button.addEventListener("click", () => changeCartItem(Number(button.dataset.minus), -1)));
+  cartItems.querySelectorAll("[data-plus]").forEach(button => button.addEventListener("click", () => changeCartItem(Number(button.dataset.plus), 1)));
+  cartItems.querySelectorAll("[data-remove]").forEach(button => button.addEventListener("click", () => { cart.splice(Number(button.dataset.remove), 1); saveCart(); renderCart(); }));
+}
+
+function openCart() { cartOverlay.classList.add("open"); cartOverlay.setAttribute("aria-hidden", "false"); document.getElementById("cartClose").focus(); }
+function closeCart() { cartOverlay.classList.remove("open"); cartOverlay.setAttribute("aria-hidden", "true"); }
+document.getElementById("cartToggle").addEventListener("click", openCart);
+document.getElementById("cartClose").addEventListener("click", closeCart);
+cartOverlay.addEventListener("click", event => { if (event.target === cartOverlay) closeCart(); });
+document.getElementById("clearCart").addEventListener("click", () => { cart = []; saveCart(); renderCart(); });
+document.getElementById("checkoutToggle").addEventListener("click", () => document.getElementById("checkoutSection").classList.toggle("open"));
+document.getElementById("recebimento").addEventListener("change", event => { document.getElementById("addressFields").hidden = event.target.value !== "Entrega"; });
+renderCart();
+renderPromotions();
+
+document.addEventListener("keydown", event => { if (event.key === "Escape") closeCart(); });
+
+// ---------- Checkout e WhatsApp ----------
+const WHATSAPP_LOJA = "+5527998441485";
+const checkoutForm = document.getElementById("checkoutForm");
+checkoutForm.addEventListener("submit", async event => {
+  event.preventDefault();
+  const data = Object.fromEntries(new FormData(checkoutForm));
+  const error = document.getElementById("checkoutError");
+  const orderButton = document.getElementById("orderButton");
+  error.textContent = "";
+  if (!cart.length) { error.textContent = "Adicione pelo menos um produto ao carrinho."; return; }
+  if (!/^.{8,}$/.test(data.nome.trim()) || !/^\+?[\d ()-]{8,}$/.test(data.telefone.trim())) { error.textContent = "Informe nome e telefone válidos."; return; }
+  if (data.recebimento === "Entrega" && ["cep", "rua", "numero", "bairro", "cidade"].some(field => !String(data[field] || "").trim())) { error.textContent = "Preencha o endereço completo para entrega."; return; }
+  if (WHATSAPP_LOJA === "COLOQUE_AQUI_O_NUMERO_DA_LOJA") { error.textContent = "Configure o número de WhatsApp da loja antes de finalizar."; return; }
+  orderButton.disabled = true;
+  const orderId = "PG-" + new Date().toISOString().replace(/[-:TZ.]/g, "").slice(0, 14) + "-" + Math.floor(Math.random() * 1000).toString().padStart(3, "0");
+  const productsText = cart.map(item => `${item.quantity}x ${item.product.name} - ${item.grams >= 1000 ? "1kg" : item.grams + "g"}\n${formatMoney(priceInCents(item.product) * item.grams * item.quantity / 1000)}`).join("\n\n");
+  const orderItems = cart.map(item => ({ productId: item.productId || item.product.id || productId(item.product.name), grams: item.grams, quantity: item.quantity }));
+  const address = data.recebimento === "Entrega" ? `${data.rua}, ${data.numero}${data.complemento ? `, ${data.complemento}` : ""} - ${data.bairro}, ${data.cidade} - CEP ${data.cep}` : "Retirada na loja";
+  const message = `Olá! Gostaria de fazer um pedido na Puro a Granel.\n\nPEDIDO ${orderId}\n\n${productsText}\n\n--------------------\nTotal: ${formatMoney(cartTotalCents())}\n\nCLIENTE\nNome: ${data.nome}\nTelefone: ${data.telefone}${data.email ? `\nE-mail: ${data.email}` : ""}\n\nRECEBIMENTO\n${address}\n\nPAGAMENTO\n${data.pagamento}`;
+  try {
+    if (CADASTRO_WEBHOOK_URL !== "COLE_AQUI_A_URL_DO_WEB_APP") await fetch(CADASTRO_WEBHOOK_URL, { method: "POST", mode: "no-cors", headers: { "Content-Type": "text/plain" }, body: JSON.stringify({ action: "order", ...data, orderId, itens: orderItems, produtos: productsText, total: cartTotalCents(), endereco: address }) });
+    window.open(`https://wa.me/${WHATSAPP_LOJA.replace(/\D/g, "")}?text=${encodeURIComponent(message)}`, "_blank", "noopener");
+    cart = []; saveCart(); renderCart(); checkoutForm.reset(); document.getElementById("addressFields").hidden = true; closeCart();
+  } catch { error.textContent = "Não foi possível finalizar o pedido agora. Tente novamente."; } finally { orderButton.disabled = false; }
+});
+
+// ---------- Formulário de cadastro ----------
+const form = document.getElementById("cadastroForm");
+const msg = document.getElementById("cadastroMsg");
+const btn = document.getElementById("cadastroBtn");
+
+form.addEventListener("submit", async (e) => {
+  e.preventDefault();
+  msg.textContent = "";
+  msg.className = "form-msg";
+
+  if (CADASTRO_WEBHOOK_URL === "COLE_AQUI_A_URL_DO_WEB_APP") {
+    msg.textContent = "Configuração pendente: adicione a URL do Web App no código do site.";
+    msg.className = "form-msg err";
+    return;
+  }
+
+  const data = new FormData(form);
+  const nome = data.get("nome").trim();
+  const telefone = data.get("telefone").trim();
+  const email = data.get("email").trim();
+  if (nome.length < 2 || !/^\+?[\d ()-]{8,}$/.test(telefone) || (email && !/^\S+@\S+\.\S+$/.test(email))) {
+    msg.textContent = "Confira nome, telefone e e-mail antes de enviar.";
+    msg.className = "form-msg err";
+    return;
+  }
+  btn.disabled = true;
+  btn.textContent = "Enviando...";
+
+  try {
+    await fetch(CADASTRO_WEBHOOK_URL, {
+      method: "POST",
+      mode: "no-cors",
+      headers: { "Content-Type": "text/plain" },
+      body: JSON.stringify({
+        action: "register",
+        nome,
+        telefone,
+        email,
+      }),
+    });
+    msg.textContent = `Seja bem-vindo(a), ${nome}! Seu cadastro foi enviado para o programa de pontos.`;
+    msg.className = "form-msg ok";
+    form.reset();
+  } catch {
+    msg.textContent = "Não foi possível enviar agora. Tente novamente em instantes.";
+    msg.className = "form-msg err";
+  } finally {
+    btn.disabled = false;
+    btn.textContent = "Quero participar";
+  }
+});
+</script>
+
 </body>
 </html>
