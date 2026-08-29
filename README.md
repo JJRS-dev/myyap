@@ -1,17 +1,18 @@
 # Puro a Granel
 
-Loja virtual estática para venda de produtos a granel, com catálogo responsivo, imagens próprias para cada produto, filtros por categoria, detalhes nutricionais, promoções, carrinho persistente e finalização do pedido pelo WhatsApp.
+Loja virtual estática para venda de produtos a granel, com catálogo responsivo, fotos reais dos produtos soltos, filtros por categoria, detalhes nutricionais, promoções, carrinho persistente e finalização do pedido pelo WhatsApp.
 
 ## Estrutura
 
 - `index.html`: página principal pronta para publicação no GitHub Pages.
 - `purograne.html`: cópia compatível da loja para acessos antigos.
+- `assets/products/`: fotos locais dos produtos e respectivos créditos de licença.
 - `CadastroUnificado.gs`: endpoint do Google Apps Script para clientes e pedidos.
 - `schema.sql`: modelo SQLite equivalente para uma futura API própria.
 
 ## Recursos da loja
 
-- 23 produtos com visuais exclusivos incorporados ao próprio HTML, sem links externos de imagens.
+- 23 produtos com fotos reais a granel, sem embalagens, marcas ou links externos de imagens.
 - Filtros para cereais, leguminosas, sementes, chás, snacks, oleaginosas, temperos e liofilizados.
 - Seleção de 100g, 250g, 500g ou 1kg, com cálculo automático.
 - Carrinho salvo no navegador.
