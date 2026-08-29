@@ -1039,6 +1039,7 @@ function renderProducts(filter) {
     ? Object.keys(CATEGORY_LABELS)
         .map(category => PRODUCTS.find(p => (p.categories || [p.cat]).includes(category)))
         .filter(Boolean)
+        .slice(0, 10)
     : PRODUCTS.filter(p => (p.categories || [p.cat]).includes(filter));
 
   visibleProducts.forEach(p => {
