@@ -11,7 +11,7 @@ Loja virtual estática para venda de produtos a granel, com catálogo responsivo
 
 ## Recursos da loja
 
-- 23 produtos com visuais exclusivos incorporados ao próprio HTML, sem links externos de imagens.
+- 369 produtos com visuais exclusivos incorporados ao próprio HTML, sem links externos de imagens.
 - Filtros para cereais, leguminosas, sementes, chás, snacks, oleaginosas, temperos e liofilizados.
 - Seleção de 100g, 250g, 500g ou 1kg, com cálculo automático.
 - Carrinho salvo no navegador.
@@ -35,7 +35,7 @@ No GitHub, abra **Settings > Pages**, selecione a branch `main` e a pasta raiz. 
 
 ## Validação recomendada
 
-1. Acesse a página inicial e confirme os 23 produtos.
+1. Acesse a página inicial e confirme os 369 produtos.
 2. Teste todos os filtros.
 3. Abra um produto, altere o peso e adicione ao carrinho.
 4. Atualize a página e confirme que o carrinho foi mantido.
