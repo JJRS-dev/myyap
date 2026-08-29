@@ -1,0 +1,35 @@
+name: Atualizar visualização por categoria
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/update-category-preview.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Aplicar visualização resumida
+        run: python scripts/update_category_preview.py
+
+      - name: Commit das alterações
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add index.html purograne.html
+          if git diff --cached --quiet; then
+            echo "Sem alterações"
+            exit 0
+          fi
+          git commit -m "feat: mostra uma opção por categoria em Todos"
+          git push
