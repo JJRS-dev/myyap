@@ -2,21 +2,18 @@ from pathlib import Path
 
 FILES = [Path('index.html'), Path('purograne.html')]
 
-OLD = '''function renderProducts(filter) {
-  grid.innerHTML = "";
-  PRODUCTS
-    .filter(p => filter === "todos" || (p.categories || [p.cat]).includes(filter))
-    .forEach(p => {'''
-
-NEW = '''function renderProducts(filter) {
-  grid.innerHTML = "";
-  const visibleProducts = filter === "todos"
+OLD = '''  const visibleProducts = filter === "todos"
     ? Object.keys(CATEGORY_LABELS)
         .map(category => PRODUCTS.find(p => (p.categories || [p.cat]).includes(category)))
         .filter(Boolean)
-    : PRODUCTS.filter(p => (p.categories || [p.cat]).includes(filter));
+    : PRODUCTS.filter(p => (p.categories || [p.cat]).includes(filter));'''
 
-  visibleProducts.forEach(p => {'''
+NEW = '''  const visibleProducts = filter === "todos"
+    ? Object.keys(CATEGORY_LABELS)
+        .map(category => PRODUCTS.find(p => (p.categories || [p.cat]).includes(category)))
+        .filter(Boolean)
+        .slice(0, 10)
+    : PRODUCTS.filter(p => (p.categories || [p.cat]).includes(filter));'''
 
 for path in FILES:
     text = path.read_text(encoding='utf-8')
