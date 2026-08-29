@@ -5,6 +5,7 @@ on:
     branches: [main]
     paths:
       - '.github/workflows/update-category-preview.yml'
+      - 'scripts/update_category_preview.py'
   workflow_dispatch:
 
 permissions:
@@ -31,5 +32,5 @@ jobs:
             echo "Sem alterações"
             exit 0
           fi
-          git commit -m "feat: mostra uma opção por categoria em Todos"
+          git commit -m "feat: limita aba Todos a 10 produtos"
           git push
