@@ -1,0 +1,37 @@
+name: Importar catálogo completo a granel
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'data/catalog_bulk.csv'
+      - 'scripts/import_bulk_catalog.py'
+      - '.github/workflows/import-bulk-catalog.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  import-catalog:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Atualizar catálogo, preços, categorias e imagens
+        run: python scripts/import_bulk_catalog.py
+
+      - name: Commit das alterações
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add index.html purograne.html CadastroUnificado.gs README.md
+          if git diff --cached --quiet; then
+            echo "Sem alterações"
+            exit 0
+          fi
+          git commit -m "feat: importa 369 produtos a granel com preços por 100g"
+          git push
