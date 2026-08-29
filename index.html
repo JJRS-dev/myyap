@@ -1035,9 +1035,13 @@ const grid = document.getElementById("productsGrid");
 
 function renderProducts(filter) {
   grid.innerHTML = "";
-  PRODUCTS
-    .filter(p => filter === "todos" || (p.categories || [p.cat]).includes(filter))
-    .forEach(p => {
+  const visibleProducts = filter === "todos"
+    ? Object.keys(CATEGORY_LABELS)
+        .map(category => PRODUCTS.find(p => (p.categories || [p.cat]).includes(category)))
+        .filter(Boolean)
+    : PRODUCTS.filter(p => (p.categories || [p.cat]).includes(filter));
+
+  visibleProducts.forEach(p => {
       const card = document.createElement("article");
       card.className = "product-card reveal";
       card.innerHTML = `
